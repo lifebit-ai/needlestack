@@ -322,6 +322,10 @@ if(params.input_vcf) {
 
   /* Building the bed file where calling would be done */
   process bed {
+  
+      input: 
+      file fai from fasta_ref_fai
+      
       output:
       file "temp.bed" into outbed
 
@@ -338,7 +342,7 @@ if(params.input_vcf) {
 
       else if (input_region == 'whole_genome')
       '''
-      cat !{fasta_ref_fai} | awk '{print $1"	"0"	"$2 }' > temp.bed
+      cat !{fai} | awk '{print $1"	"0"	"$2 }' > temp.bed
       '''
   }
 
