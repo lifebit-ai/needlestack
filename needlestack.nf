@@ -239,9 +239,11 @@ if(params.input_vcf) {
   assert (params.fasta_ref != true) && (params.fasta_ref != null) : "please specify --fasta_ref option (--fasta_ref reference.fasta(.gz))"
   assert (params.bam_folder != true) && (params.bam_folder != null) : "please specify --bam_folder option (--bam_folder bamfolder)"
 
+  params.fasta_ref_fai="${params.fasta_ref}"+'.fai'
+  params.fasta_ref_gzi="${params.fasta_ref}"+'.gzi'
   fasta_ref = file( params.fasta_ref )
-  fasta_ref_fai = file( params.fasta_ref+'.fai' )
-  fasta_ref_gzi = file( params.fasta_ref+'.gzi' )
+  fasta_ref_fai = file( params.fasta_ref_fai )
+  fasta_ref_gzi = file( params.fasta_ref_gzi )
 
   /* Verify user inputs are correct */
 
