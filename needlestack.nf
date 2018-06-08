@@ -24,6 +24,12 @@
 // - needlestack.r (in bin folder)
 // - pileup2baseindel.pl (in bin folder) (+ perl)
 
+
+params.fasta_ref="s3://deepvariant-data/genomes/hg19/hg19.fa.gz"
+params.fasta_ref_fai="s3://deepvariant-data/genomes/hg19/hg19.fa.gz.fai"
+params.fasta_ref_gzi="s3://deepvariant-data/genomes/hg19/hg19.fa.gz.gzi"
+  
+  
 params.help = null
 params.input_vcf = null
 params.out_vcf = null
@@ -235,13 +241,13 @@ if(params.input_vcf) {
 
 } else {
 
+
+
+
   params.out_folder = params.bam_folder // if not provided, outputs will be held on the input bam folder
   assert (params.fasta_ref != true) && (params.fasta_ref != null) : "please specify --fasta_ref option (--fasta_ref reference.fasta(.gz))"
   assert (params.bam_folder != true) && (params.bam_folder != null) : "please specify --bam_folder option (--bam_folder bamfolder)"
 
-  params.fasta_ref="s3://deepvariant-data/genomes/hg19/hg19.fa.gz"
-  params.fasta_ref_fai="s3://deepvariant-data/genomes/hg19/hg19.fa.gz.fai"
-  params.fasta_ref_gzi="s3://deepvariant-data/genomes/hg19/hg19.fa.gz.gzi"
 
   fasta_ref = file( params.fasta_ref )
   fasta_ref_fai = file( params.fasta_ref_fai )
