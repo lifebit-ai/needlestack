@@ -390,13 +390,14 @@ if(params.input_vcf) {
       region_tag = split_bed.baseName
       '''
       
-      for file in `ls BA/*.bam`; do samtools view -H $file| grep "@SQ" | cut -f 2 | cut -d ':' -f 2 >> regions_bam  ; done
+      for file in `ls BAM/*.bam`; do samtools view -H $file| grep "@SQ" | cut -f 2 | cut -d ':' -f 2 >> regions_bam  ; done
       sort regions_bam | uniq > regions_bam_uniq
       
       
       set -o pipefail
       while read bed_line; do
-          found=`grep "$bed_line$" regions_bam_uniq | wc -l`
+          region=`echo $bed_line| cut -d':' -f1`
+    	  found=`grep "$region$" regions_bam_uniq | wc -l`
           if [[ $found -gt 0 ]]; then 
             samtools mpileup --fasta-ref !{fasta_ref} --region $bed_line --ignore-RG --min-BQ !{params.base_qual} --min-MQ !{params.map_qual} --max-idepth 1000000 --max-depth !{params.max_DP} BAM/*.bam | sed 's/		/	*	*/g' >> !{region_tag}.pileup
           fi
